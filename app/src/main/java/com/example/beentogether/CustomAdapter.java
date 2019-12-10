@@ -1,20 +1,15 @@
 package com.example.beentogether;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.beentogether.Event;
-import com.example.beentogether.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class CustomAdapter extends ArrayAdapter<Event> {
     private Context context;
@@ -43,6 +38,7 @@ public class CustomAdapter extends ArrayAdapter<Event> {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+
         Event event = arrEvent.get(position);
         viewHolder.tvNote.setText(event.getNote());
         viewHolder.tvDay.setText(event.getDay());

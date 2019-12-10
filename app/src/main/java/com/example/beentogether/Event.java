@@ -2,10 +2,11 @@ package com.example.beentogether;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class Event {
+public class Event implements Serializable {
     private String note;
     private int day, month, year;
 

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity {
     TextView tvBoyName, tvBoyPhone, tvGirlName, tvGirlPhone;
     TextView tvLoveDay;
-    FloatingActionButton setUp, love, avtBoy, avtGirl;
+    FloatingActionButton setUp, love;
+    ImageButton avtBoy, avtGirl;
     String loveTime = "0", day = "1", month = "1", year = "1", boyName = "", girlName = "", boyPhone, girlPhone;
 
     @Override
