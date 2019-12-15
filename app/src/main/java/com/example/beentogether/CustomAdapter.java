@@ -37,7 +37,7 @@ public class CustomAdapter extends ArrayAdapter<Event> {
         }
 
         Event event = arrEvent.get(position);
-        viewHolder.tvNote.setText(event.getYear()+"/"+event.getMonth()+"/"+event.getDay()+": "+event.getNote());
+        viewHolder.tvNote.setText(event.toString());
         return convertView;
     }
 

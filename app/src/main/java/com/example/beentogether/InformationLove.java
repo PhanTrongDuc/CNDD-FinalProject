@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class InformationLove extends AppCompatActivity {
+    EvenDB evenDB= new EvenDB(this);
     private ListView lvEvent;
     private ArrayList<Event> arrEvent;
     private CustomAdapter customAdapter;
@@ -28,6 +30,7 @@ public class InformationLove extends AppCompatActivity {
         setContentView(R.layout.activity_information_love);
         cvEvent = findViewById(R.id.cv_event);
         arrEvent = new ArrayList<>();
+        arrEvent=evenDB.getAllEvent();
         lvEvent = findViewById(R.id.lv_event);
 
 
@@ -53,7 +56,9 @@ public class InformationLove extends AppCompatActivity {
         if(requestCode==4 && requestCode==4){
             Bundle bundle=data.getBundleExtra("setup");
             event=bundle.getString("event");
-            arrEvent.add(new Event(event, dayEvent, monthEvent, yearEvent));
+            Event eventadd= new Event(event, dayEvent, monthEvent, yearEvent);
+            arrEvent.add(eventadd);
+            evenDB.addEvent(eventadd);
             customAdapter.notifyDataSetChanged();
         }
     }
