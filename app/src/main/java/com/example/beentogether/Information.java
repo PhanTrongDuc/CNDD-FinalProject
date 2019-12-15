@@ -1,6 +1,7 @@
 package com.example.beentogether;
 
 public class Information {
+    private int Id;
     private String name;
     private String phone;
     private String date;
@@ -9,6 +10,13 @@ public class Information {
     }
 
     public Information(String name, String phone, String date) {
+        this.name = name;
+        this.phone = phone;
+        this.date = date;
+    }
+
+    public Information(int id, String name, String phone, String date) {
+        Id = id;
         this.name = name;
         this.phone = phone;
         this.date = date;
@@ -38,4 +46,11 @@ public class Information {
         this.date = date;
     }
 
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
+    }
 }

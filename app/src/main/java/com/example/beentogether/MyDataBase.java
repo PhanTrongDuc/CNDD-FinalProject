@@ -7,11 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyDataBase extends SQLiteOpenHelper {
 
     private static final int VERSION = 1;
-    private static final String DATABASE_NAME = "Information";
+    private static final String DATABASE_NAME = "information";
 
     public MyDataBase(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
@@ -19,13 +20,12 @@ public class MyDataBase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String script = "Create table information(name TEXT Primary Key, phone TEXT, date TEXT)";
+        String script = "Create table information(id INTEGER Primary Key,name TEXT , phone TEXT, date TEXT)";
         db.execSQL(script);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
     public void addInformation(Information information) {
@@ -33,8 +33,9 @@ public class MyDataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name", information.getName());
         values.put("phone", information.getPhone());
-        values.put("date",information.getDate());
+        values.put("date", information.getDate());
         db.insert("information", null, values);
+        db.close();
     }
 
 
@@ -43,32 +44,38 @@ public class MyDataBase extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put("name", information.getName());
         values.put("phone", information.getPhone());
-        values.put("date",information.getDate());
+        values.put("date", information.getDate());
         db.update("information", values, "name=?", new String[]{name});
     }
 
 
-    public ArrayList<Information> getAllContact() {
-        ArrayList<Information> informations = new ArrayList<>();
+    public List<Information> getAllInformation() {
+        List<Information> informations = new ArrayList<>();
         String script = "Select*from information";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(script, null);
-        while (cursor.moveToNext()) {
-            Information information = new Information();
-            information.setName(cursor.getString(1));
-            information.setPhone(cursor.getString(2));
-            information.setDate(cursor.getString(3));
+        cursor.moveToFirst();
+        while (cursor.isAfterLast() == false) {
+            Information information = new Information(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             informations.add(information);
+            cursor.moveToNext();
         }
         return informations;
     }
 
 
-    public void deleteInformation(Information information) {
+    public void deleteInformation(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("information", "name=?", new String[]{
-                String.valueOf(information.getName())
-        });
+        db.delete("information", "id=?", new String[]{String.valueOf(id)});
         db.close();
+    }
+
+    public Information getInformation(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query("information", null, "id" + " = ?", new String[]{String.valueOf(id)}, null, null, null);
+        if (cursor != null)
+            cursor.moveToFirst();
+        Information information = new Information(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        return information;
     }
 }

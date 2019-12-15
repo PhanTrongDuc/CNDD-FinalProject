@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -15,7 +16,9 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton setUp, love;
     ImageButton avtBoy, avtGirl;
     String loveTime = "0", day = "1", month = "1", year = "1", boyName = "", girlName = "", boyPhone, girlPhone;
+    MyDataBase myDataBase = new MyDataBase(this);
+    Information informationBoy=new Information();
+    Information informationGirl= new Information();
+    List<Information> information;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +46,26 @@ public class MainActivity extends AppCompatActivity {
         avtBoy = findViewById(R.id.fbt_avtMan);
         avtGirl = findViewById(R.id.fbt_avtWoman);
         tvLoveDay = findViewById(R.id.tv_loveDay);
+        information = new ArrayList<>();
 
-
+        information = myDataBase.getAllInformation();
+        Log.d("bbbbbbbbbbbbbbbbbb","bbbbbbbbbbbbbbbbbbbbbbb"+information.size());
+        if (information.size() != 2) {
+            Log.d("aaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaa");
+            informationGirl = information.get(information.size()-1);
+            informationBoy = information.get(information.size()-2);
+            tvBoyName.setText(informationBoy.getName());
+            tvBoyPhone.setText(informationBoy.getPhone());
+            tvGirlName.setText(informationGirl.getName());
+            tvGirlPhone.setText(informationGirl.getPhone());
+            tvLoveDay.setText(informationGirl.getDate());
+        }
 
 
         love.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent(MainActivity.this, InformationLove.class);
+                Intent intent = new Intent(MainActivity.this, InformationLove.class);
                 startActivity(intent);
             }
         });
@@ -79,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private static String getLoveTime(Calendar start, Calendar end) {
+    private String getLoveTime(Calendar start, Calendar end) {
         long duration = end.getTimeInMillis() - start.getTimeInMillis();
         long days = TimeUnit.MILLISECONDS.toDays(duration);
 
@@ -88,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
 
         long remainingMinutes = remainingHours - TimeUnit.HOURS.toMillis(hours);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMinutes);
-        return days + " ngày";
+        String result = days + "ngày";
+        informationBoy.setDate(result);
+        informationGirl.setDate(result);
+        return result;
     }
 
     @Override
@@ -101,14 +123,18 @@ public class MainActivity extends AppCompatActivity {
             day = bundle.getString("day");
             Calendar datingDate = Calendar.getInstance();
             if (year.length() == 0 || month.length() == 0 || year.length() == 0) {
-                if(tvLoveDay.getText().toString().length()==0){
+                if (tvLoveDay.getText().toString().length() == 0) {
                     Toast.makeText(MainActivity.this, "Bạn chưa nhập ngày bắt đầu yêu", Toast.LENGTH_SHORT).show();
                 }
-            }else {
+            } else {
                 datingDate.set(Integer.valueOf(year), Integer.valueOf(month) - 1, Integer.valueOf(day));
                 Calendar currentDate = Calendar.getInstance();
                 loveTime = getLoveTime(datingDate, currentDate);
                 tvLoveDay.setText(loveTime);
+                informationGirl.setDate(loveTime);
+                informationBoy.setDate(loveTime);
+                myDataBase.addInformation(informationGirl);
+                myDataBase.addInformation(informationBoy);
             }
         }
 
@@ -118,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
             boyPhone = bundle.getString("boyPhone");
             tvBoyName.setText(boyName);
             tvBoyPhone.setText(boyPhone);
+            informationBoy.setName(boyName);
+            informationBoy.setPhone(boyPhone);
         }
 
         if (requestCode == 3 && resultCode == 3) {
@@ -126,6 +154,10 @@ public class MainActivity extends AppCompatActivity {
             girlPhone = bundle.getString("girlPhone");
             tvGirlName.setText(girlName);
             tvGirlPhone.setText(girlPhone);
+            informationGirl.setPhone(girlPhone);
+            informationGirl.setName(girlName);
         }
+        myDataBase.addInformation(informationBoy);
+        myDataBase.addInformation(informationGirl);
     }
 }
