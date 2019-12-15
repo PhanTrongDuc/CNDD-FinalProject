@@ -24,7 +24,6 @@ public class InformationLove extends AppCompatActivity {
         arrEvent= new ArrayList<>();
         lvEvent=findViewById(R.id.lv_event);
 
-
         customAdapter=new CustomAdapter(this, R.layout.row_listview, arrEvent);
         lvEvent.setAdapter(customAdapter);
 
@@ -37,5 +36,4 @@ public class InformationLove extends AppCompatActivity {
             }
         });
     }
-
 }

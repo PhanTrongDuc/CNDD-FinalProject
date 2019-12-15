@@ -28,32 +28,22 @@ public class CustomAdapter extends ArrayAdapter<Event> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.row_listview, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.tvNote = (TextView) convertView.findViewById(R.id.tv_note);
-            viewHolder.tvDay = (TextView) convertView.findViewById(R.id.tv_day);
-            viewHolder.tvMonth = (TextView) convertView.findViewById(R.id.tv_month);
-            viewHolder.tvYear = (TextView) convertView.findViewById(R.id.tv_year);
+            convertView = LayoutInflater.from(context).inflate(R.layout.row_listview, parent, false);
+            viewHolder.tvNote= convertView.findViewById(R.id.tv_note);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Event event = arrEvent.get(position);
-        viewHolder.tvNote.setText(event.getNote());
-        viewHolder.tvDay.setText(event.getDay());
-        viewHolder.tvMonth.setText(event.getMonth());
-        viewHolder.tvYear.setText(event.getYear());
+        viewHolder.tvNote.setText(event.getNote()+event.toString());
         return convertView;
     }
 
     public class ViewHolder {
         TextView tvNote;
-        TextView tvDay;
-        TextView tvMonth;
-        TextView tvYear;
     }
-
 }
 
 
