@@ -13,11 +13,11 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(String note,int day, int month, int year) {
-        note = this.note;
-        day=this.day;
-        month=this.month;
-        year=this.year;
+    public Event(String note, int day, int month, int year) {
+        this.note = note;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public void setNote(String note) {
@@ -55,7 +55,7 @@ public class Event implements Serializable {
     @NonNull
     @Override
     public String toString() {
-        return day+"-"+month+"-"+year+": "+ note;
+        return day + "-" + month + "-" + year + ": " + note;
     }
 }
 

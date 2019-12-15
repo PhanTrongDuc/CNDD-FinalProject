@@ -28,23 +28,23 @@ public class CustomAdapter extends ArrayAdapter<Event> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if (convertView == null) {
-            viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.row_listview, parent, false);
-            viewHolder.tvNote= convertView.findViewById(R.id.tv_note);
+            viewHolder = new ViewHolder();
+            viewHolder.tvNote = (TextView) convertView.findViewById(R.id.tv_note);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         Event event = arrEvent.get(position);
-        viewHolder.tvNote.setText(event.getNote()+event.toString());
+        viewHolder.tvNote.setText(event.getYear()+"/"+event.getMonth()+"/"+event.getDay()+": "+event.getNote());
         return convertView;
     }
 
     public class ViewHolder {
         TextView tvNote;
     }
-}
 
+}
 
 
