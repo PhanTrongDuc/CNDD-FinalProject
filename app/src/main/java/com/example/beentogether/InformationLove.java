@@ -2,12 +2,16 @@ package com.example.beentogether;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,8 +37,6 @@ public class InformationLove extends AppCompatActivity {
         arrEvent=evenDB.getAllEvent();
         lvEvent = findViewById(R.id.lv_event);
 
-
-
         customAdapter = new CustomAdapter(this, R.layout.row_listview, arrEvent);
         lvEvent.setAdapter(customAdapter);
         cvEvent.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
@@ -48,6 +50,31 @@ public class InformationLove extends AppCompatActivity {
 
             }
         });
+
+        lvEvent.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(InformationLove.this);
+                alert.setMessage("Bạn có muốn xóa sự kiện này không?");
+                alert.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        arrEvent.remove(i);
+                       evenDB.deleteEvent(arrEvent.get(i));
+                        customAdapter.notifyDataSetChanged();
+                    }
+                });
+                alert.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
+                        //Nothing
+                    }
+                });
+                alert.show();
+                return true;
+            }
+        });
+
     }
 
     @Override

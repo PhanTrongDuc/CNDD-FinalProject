@@ -49,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
         information = new ArrayList<>();
 
         information = myDataBase.getAllInformation();
-        Log.d("bbbbbbbbbbbbbbbbbb","bbbbbbbbbbbbbbbbbbbbbbb"+information.size());
         if (information.size() != 2) {
-            Log.d("aaaaaaaaaaaaaaa","aaaaaaaaaaaaaaaaaaa");
             informationGirl = information.get(information.size()-1);
             informationBoy = information.get(information.size()-2);
             tvBoyName.setText(informationBoy.getName());
@@ -94,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, 3);
             }
         });
+
+
 
 
     }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EvenDB extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -54,8 +55,6 @@ public class EvenDB extends SQLiteOpenHelper {
             String string = cursor.getString(0);
             String date = string.substring(0, string.lastIndexOf(": "));
             String[] infOfDate = date.split("-");
-            Log.d("aaaaaaaaaaaaaa", infOfDate[0]);
-
             event.setDay(Integer.valueOf(infOfDate[0]));
             event.setMonth(Integer.valueOf(infOfDate[1]));
             event.setYear(Integer.valueOf(infOfDate[2]));
@@ -65,10 +64,10 @@ public class EvenDB extends SQLiteOpenHelper {
         return events;
     }
 
-    public void deleteInformation(Information information) {
+    public void deleteEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete("information", "name=?", new String[]{
-                String.valueOf(information.getName())
+        db.delete("event", "date=?", new String[]{
+                String.valueOf(event)
         });
         db.close();
     }
