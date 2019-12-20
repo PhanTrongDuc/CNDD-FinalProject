@@ -20,7 +20,7 @@ public class EvenDB extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String script = "Create table event(date TEXT primary Key)";
+        String script = "Create table event(date TEXT Primary Key)";
         db.execSQL(script);
     }
 
@@ -67,7 +67,7 @@ public class EvenDB extends SQLiteOpenHelper {
     public void deleteEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("event", "date=?", new String[]{
-                String.valueOf(event)
+                String.valueOf(event.toString())
         });
         db.close();
     }

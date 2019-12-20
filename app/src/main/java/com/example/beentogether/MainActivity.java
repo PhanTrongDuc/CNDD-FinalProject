@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         long remainingMinutes = remainingHours - TimeUnit.HOURS.toMillis(hours);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(remainingMinutes);
-        String result = days + "ngày";
+        String result = days + " ngày";
         informationBoy.setDate(result);
         informationGirl.setDate(result);
         return result;

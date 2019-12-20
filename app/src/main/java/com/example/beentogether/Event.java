@@ -20,6 +20,7 @@ public class Event implements Serializable {
         this.year = year;
     }
 
+
     public void setNote(String note) {
         this.note = note;
     }
@@ -51,6 +52,7 @@ public class Event implements Serializable {
     public int getYear() {
         return year;
     }
+
 
     @NonNull
     @Override
