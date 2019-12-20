@@ -49,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
         information = new ArrayList<>();
 
         information = myDataBase.getAllInformation();
-        if (information.size() != 2) {
+
+        if (information.size() >=2) {
             informationGirl = information.get(information.size()-1);
             informationBoy = information.get(information.size()-2);
             tvBoyName.setText(informationBoy.getName());

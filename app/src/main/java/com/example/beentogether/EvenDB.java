@@ -67,8 +67,10 @@ public class EvenDB extends SQLiteOpenHelper {
     public void deleteEvent(Event event) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete("event", "date=?", new String[]{
-                String.valueOf(event.toString())
+                event.toString()
         });
         db.close();
     }
+
+
 }

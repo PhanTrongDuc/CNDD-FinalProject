@@ -83,16 +83,6 @@
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_del"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginTop="550dp"
-        android:layout_marginRight="40dp"
-        android:backgroundTint="#EC0204"
-        android:onClick="onClickDelete"
-        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 
 
